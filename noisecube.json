@@ -1,0 +1,391 @@
+{
+    "network_analyzer":{
+        "fstart":4e9,
+        "fstop":9e9,
+        "numpoints":101,
+        "ifbw":500,
+        "id":"Rohde&Schwarz,ZVA24-2Port,1145111024100131,3.30",
+        "power":-30.0
+    },
+    "spectrum_analyzer":{
+        "fstart":4e9,
+        "fstop":9e9,
+        "numpoints":101,
+        "rbw":1e6,
+        "vbw":1e3,
+        "id":Hewlett-Packard, E7405A, SG45102671, A.14.04,
+        "unit":"W"
+    },
+    "switch_network":{
+        "ip_address":"169.254.10.10",
+        "vna_input":true,
+        "vna_ouput":true,
+        "noise_diode":false
+    },
+    "programmable_attenuator":{
+        "ip_address":"169.254.11.11",
+        "value":-30
+    },
+    "radio_pump":{
+        "frequency":6.5e9,
+        "power":-26.0
+    },
+    "radio_probe":{
+        "frequency":5.5e9,
+        "power":-40.0
+    },
+    "qubit_flux_bias":{
+        "dc_offset":0.0,
+        "ac_audio_vpp":0.0,
+        "ac_audio_frequency":1000
+    },
+    "cryogenic_noise_source":{
+        "dc_offset":0.0,
+        "ac_audio_vpp":0.0,
+        "ac_audio_frequency":1000
+    },
+    "controls": [
+        {
+            "knob_mode": "qubit_flux_bias",
+            "knobs": [
+                [
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "quantities": [
+                "dc_offset",
+                "ac_vpp",
+                "ac_frequency"
+            ],
+            "units": [
+                "V",
+                "V",
+                "Hz"
+            ],
+            "multipliers": [
+                [
+                    0.1,
+                    0.01,
+                    0.001
+                ],
+                [
+                    0.1,
+                    0.01,
+                    0.001
+                ],
+                [
+                    100,
+                    10,
+                    1
+                ]
+            ],
+            "max": [
+                1,
+                1,
+                5000
+            ],
+            "min": [
+                -1,
+                -1,
+                100
+            ],
+            "defaults": [
+                0,
+                0,
+                440
+            ],
+            "values": [
+                0,
+                0,
+                440
+            ]
+        },
+        {
+            "knob_mode": "noise_source_bias",
+            "knobs": [
+                [
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "quantities": [
+                "dc_offset",
+                "ac_vpp",
+                "ac_frequency"
+            ],
+            "units": [
+                "V",
+                "V",
+                "Hz"
+            ],
+            "multipliers": [
+                [
+                    0.1,
+                    0.01,
+                    0.001
+                ],
+                [
+                    0.1,
+                    0.01,
+                    0.001
+                ],
+                [
+                    100,
+                    10,
+                    1
+                ]
+            ],
+            "max": [
+                1,
+                1,
+                5000
+            ],
+            "min": [
+                -1,
+                -1,
+                100
+            ],
+            "defaults": [
+                0,
+                0,
+                440
+            ],
+            "values": [
+                0,
+                0,
+                440
+            ]
+        },
+        {
+            "knob_mode": "radio_pump",
+            "knobs": [
+                [
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "quantities": [
+                "power",
+                "frequency"
+            ],
+            "units": [
+                "dBm",
+                "GHz"
+            ],
+            "multipliers": [
+                [
+                    0.1,
+                    0.01,
+                    0.001
+                ],
+                [
+                    0.1,
+                    0.01,
+                    0.001
+                ]
+            ],
+            "max": [
+                0,
+                9
+            ],
+            "min": [
+                -40,
+                4
+            ],
+            "defaults": [
+                -26,
+                6
+            ],
+            "values": [
+                -26,
+                6
+            ]
+        },
+        {
+            "knob_mode": "radio_probe",
+            "knobs": [
+                [
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "quantities": [
+                "power",
+                "frequency",
+                "programmable_attenuator"
+            ],
+            "units": [
+                "dBm",
+                "GHz",
+                "dB"
+            ],
+            "multipliers": [
+                [
+                    0.1,
+                    0.01,
+                    0.001
+                ],
+                [
+                    0.1,
+                    0.01,
+                    0.001
+                ],
+                [
+                    10,
+                    1,
+                    0.1
+                ]
+            ],
+            "max": [
+                0,
+                9,
+                0
+            ],
+            "min": [
+                -60,
+                4,
+                -63
+            ],
+            "defaults": [
+                -26,
+                5.5,
+                30
+            ],
+            "values": [
+                -26,
+                5.5,
+                30
+            ]
+        },
+        {
+            "knob_mode": "radio_spectrum",
+            "knobs": [
+                [
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "quantities": [
+                "center_frequency",
+                "frequency_range"
+            ],
+            "units": [
+                "GHz",
+                "GHz"
+            ],
+            "multipliers": [
+                [
+                    0.1,
+                    0.01,
+                    0.001
+                ],
+                [
+                    0.1,
+                    0.01,
+                    0.001
+                ]
+            ],
+            "max": [
+                9,
+                4
+            ],
+            "min": [
+                4,
+                0
+            ],
+            "defaults": [
+                5.5,
+                0.1
+            ],
+            "values": [
+                5.5,
+                0.1
+            ]
+        },
+        {
+            "knob_mode": "am_radio_spectrum",
+            "knobs": [
+                [
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "quantities": [
+                "demodulation_frequency"
+            ],
+            "units": [
+                "GHz"
+            ],
+            "multipliers": [
+                [
+                    0.1,
+                    0.01,
+                    0.001
+                ]
+            ],
+            "max": [
+                9
+            ],
+            "min": [
+                4
+            ],
+            "defaults": [
+                5.5
+            ],
+            "values": [
+                5.5
+            ]
+        }
+    ],
+    "spectra": [],
+    "knob_history": [],
+    "fghz": [],
+    "audio_frequency": []
+}
