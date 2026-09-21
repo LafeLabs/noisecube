@@ -49,26 +49,33 @@ noisecube.controls = [{
     "defaults":[-26,5.5,30],
     "values":[-26,5.5,30]
 },{
-    "knob_mode":"radio_spectrum",
-    "knobs":[[0,0,0],[0,0,0]],
-    "quantities":["center_frequency","frequency_range"],
-    "units":["GHz","GHz"],
-    "multipliers":[[0.1,0.01,0.001],[0.1,0.01,0.001]],
-    "max":[9,4],
-    "min":[4,0],
-    "defaults":[5.5,0.1],
-    "values":[5.5,0.1]
+    "knob_mode":"frequency_sweep",
+    "knobs":[[0,0,0],[0,0,0],[0,0,0]],
+    "quantities":["fstart","fstop","numpoints"],
+    "units":["GHz","GHz"," points"],
+    "multipliers":[[0.1,0.01,0.001],[0.1,0.01,0.001],[100,10,1]],
+    "max":[9,9],
+    "min":[4,4,10],
+    "defaults":[4,8,101],
+    "values":[4,8,101]
 },{
-    "knob_mode":"am_radio_spectrum",
-    "knobs":[[0,0,0]],
-    "quantities":["demodulation_frequency"],
-    "units":["GHz"],
-    "multipliers":[[0.1,0.01,0.001]],
-    "max":[9],
-    "min":[4],
-    "defaults":[5.5],
-    "values":[5.5]
-}];
+    "knob_mode":"bandwidths",
+    "knobs":[[0,0,0],[0,0,0],[0,0,0]],
+    "quantities":["vna_ifbw","spa_rbw","spa_vbw"],
+    "units":["kHz","MHz","Hz"],
+    "multipliers":[[1,0.1,0.01],[1,0.1,0.01],[1000,100,10]],
+    "max":[1000,5,10000],
+    "min":[0.01,0.01,10],
+    "defaults":[1,1,1000],
+    "values":[1,1,1000]
+},{
+    "knob_mode":"vna/spa mode"
+},{
+    "knob_mode":"probe on/off"
+},{
+    "knob_mode":"pump on/off"
+}
+];
 
 noisecube.spectra = [];
 noisecube.knob_history = [];
@@ -96,11 +103,11 @@ knob_spacing_y = square_width/3;
 footer_height = innerHeight - square_width;
 
 button_width = 0.94*square_width/3;
-button_height = 0.8*footer_height/3;
+button_height = 0.5*footer_height/3;
 button_origin_x =  square_width/6;
-button_origin_y =  square_width + footer_height/3;
+button_origin_y =  square_width + footer_height/6 -5;
 button_spacing_x = square_width/3;
-button_spacing_y = footer_height/3;
+button_spacing_y = footer_height/4;
 
 
 
@@ -124,6 +131,7 @@ function draw() {
     textSize(20);
     text(noisecube.controls[controlIndex].knob_mode,5,25);
     
+    line(0,square_width,square_width,square_width);
     for(row = 0; row < noisecube.controls[controlIndex].knobs.length; row++){
         noisecube.controls[controlIndex].values[row] = noisecube.controls[controlIndex].defaults[row]
         noisecube.controls[controlIndex].values[row] += noisecube.controls[controlIndex].multipliers[row][0]*noisecube.controls[controlIndex].knobs[row][0];
@@ -175,7 +183,7 @@ function draw() {
     strokeWeight(5);
     buttonIndex = -1;//always -1 when mouse not in button
     fill(255);
-    for(row = 0; row < 2; row++){
+    for(row = 0; row < 3; row++){
         for(col = 0; col < 3; col++){
             button_x = button_origin_x + col*button_spacing_x;
             button_y = button_origin_y + row*button_spacing_y;
@@ -191,14 +199,16 @@ function draw() {
             else{
                 fill(255);
             }
-            strokeWeight(5);
+            strokeWeight(3);
             rect(button_x - 0.5*button_width,button_y - 0.5*button_height,button_width,button_height);
             strokeWeight(1);
             fill(0);
             
             //noisecube.controls
-            
-            text(noisecube.controls[3*row + col].knob_mode,button_x - 0.5*button_width + 5,button_y+7);
+            if(noisecube.controls[3*row + col] !=null){
+                text(noisecube.controls[3*row + col].knob_mode,button_x - 0.5*button_width + 5,button_y+3);                
+            }
+
         }
     }
     

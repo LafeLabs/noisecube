@@ -1,5 +1,9 @@
 # [noisecube](https://github.com/lafelabs/noisecube/)
 
+ - [noisecube.html](noisecube.html)
+ - [noisecube.js](noisecube.js)
+ - [noisecube.py](noisecube.py)
+ - [noisecube.json](noisecube.json)
 
 Noise cube is a human interface for exploring the geometry of the noise of a system.  We use [p5js](https://py5js.org) to build knobs and buttons which allow a human user to control a physics experiment with Python which then passes noise spectra back to the web front where spectra are displayed both as 1d graphs and as 2d heat maps in black and white.
 

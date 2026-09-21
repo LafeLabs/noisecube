@@ -253,8 +253,13 @@
             ]
         },
         {
-            "knob_mode": "radio_spectrum",
+            "knob_mode": "frequency_sweep",
             "knobs": [
+                [
+                    0,
+                    0,
+                    0
+                ],
                 [
                     0,
                     0,
@@ -267,12 +272,14 @@
                 ]
             ],
             "quantities": [
-                "center_frequency",
-                "frequency_range"
+                "fstart",
+                "fstop",
+                "numpoints"
             ],
             "units": [
                 "GHz",
-                "GHz"
+                "GHz",
+                " points"
             ],
             "multipliers": [
                 [
@@ -284,28 +291,46 @@
                     0.1,
                     0.01,
                     0.001
+                ],
+                [
+                    100,
+                    10,
+                    1
                 ]
             ],
             "max": [
                 9,
-                4
+                9
             ],
             "min": [
                 4,
-                0
+                4,
+                10
             ],
             "defaults": [
-                5.5,
-                0.1
+                4,
+                8,
+                101
             ],
             "values": [
-                5.5,
-                0.1
+                4,
+                8,
+                101
             ]
         },
         {
-            "knob_mode": "am_radio_spectrum",
+            "knob_mode": "bandwidths",
             "knobs": [
+                [
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0
+                ],
                 [
                     0,
                     0,
@@ -313,30 +338,61 @@
                 ]
             ],
             "quantities": [
-                "demodulation_frequency"
+                "vna_ifbw",
+                "spa_rbw",
+                "spa_vbw"
             ],
             "units": [
-                "GHz"
+                "kHz",
+                "MHz",
+                "Hz"
             ],
             "multipliers": [
                 [
+                    1,
                     0.1,
-                    0.01,
-                    0.001
+                    0.01
+                ],
+                [
+                    1,
+                    0.1,
+                    0.01
+                ],
+                [
+                    1000,
+                    100,
+                    10
                 ]
             ],
             "max": [
-                9
+                1000,
+                5,
+                10000
             ],
             "min": [
-                4
+                0.01,
+                0.01,
+                10
             ],
             "defaults": [
-                5.5
+                1,
+                1,
+                1000
             ],
             "values": [
-                5.5
+                1,
+                1,
+                1000
             ]
+        },
+        {
+            "knob_mode": "vna/spa mode"
+        },
+        {
+            "knob_mode": "probe on/off"
+        },
+        {
+            "knob_mode": "pump on/off"
         }
     ],
     "spectra": [],
