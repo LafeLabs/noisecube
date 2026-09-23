@@ -44,8 +44,8 @@ noisecube.controls = [{
     "quantities":["power","frequency","programmable_attenuator"],
     "units":["dBm","GHz","dB"],
     "multipliers":[[0.1,0.01,0.001],[0.1,0.01,0.001],[10,1,0.1]],
-    "max":[0,9,0],
-    "min":[-60,4,-63],
+    "max":[0,9,63],
+    "min":[-60,4,0],
     "defaults":[-26,5.5,30],
     "values":[-26,5.5,30]
 },{
@@ -81,6 +81,10 @@ noisecube.spectra = [];
 noisecube.knob_history = [];
 noisecube.fghz = [];
 noisecube.audio_frequency = [];
+
+noisecube.pump_on = false;
+noisecube.probe_on = false;
+noisecube.spa_mode = false;
 
 save_file("noisecube.json",JSON.stringify(noisecube,null,"    "));
 
@@ -130,7 +134,25 @@ function draw() {
     fill(0);
     textSize(20);
     text(noisecube.controls[controlIndex].knob_mode,5,25);
-    
+    if(noisecube.pump_on == true){
+        text("pump on",square_width-150,15);
+    }
+    else{
+        text("pump off",square_width-150,15);
+    }
+    if(noisecube.probe_on == true){
+        text("probe on",square_width-150,35);
+    }
+    else{
+        text("probe off",square_width-150,35);
+    }
+    if(noisecube.spa_mode == true){
+        text("spa mode",square_width-350,15);
+    }
+    else{
+        text("vna mode",square_width-350,15);
+    }
+
     line(0,square_width,square_width,square_width);
     for(row = 0; row < noisecube.controls[controlIndex].knobs.length; row++){
         noisecube.controls[controlIndex].values[row] = noisecube.controls[controlIndex].defaults[row]
@@ -246,6 +268,10 @@ function mouseWheel(event) {
         }        
 
         knobPayload.value = noisecube.controls[controlIndex].values[knobRow];
+        knobPayload.spa_mode = noisecube.spa_mode;
+        knobPayload.pump_on = noisecube.pump_on;
+        knobPayload.probe_on = noisecube.probe_on;
+        
         knobPayload.timestamp = Date.now();
         
         sendData(knobPayload);
@@ -269,6 +295,28 @@ function sendData(instrumentData) {
 function mouseClicked() {
   if ([0, 1, 2, 3, 4, 5].includes(buttonIndex)) {
     controlIndex = buttonIndex;
+  }
+  if(buttonIndex == 6){
+    noisecube.spa_mode = !noisecube.spa_mode;
+    knobPayload = {};
+    knobPayload.spa_mode = noisecube.spa_mode;
+    knobPayload.timestamp = Date.now();
+    sendData(knobPayload);
+  }
+  if(buttonIndex == 7){
+    noisecube.probe_on = !noisecube.probe_on;
+    knobPayload = {};
+    knobPayload.probe_on = noisecube.probe_on;
+    knobPayload.timestamp = Date.now();
+    sendData(knobPayload);
+
+  }
+  if(buttonIndex == 8){
+    noisecube.pump_on = !noisecube.pump_on;
+    knobPayload = {};
+    knobPayload.pump_on = noisecube.pump_on;
+    knobPayload.timestamp = Date.now();
+    sendData(knobPayload);
   }
 }
 
