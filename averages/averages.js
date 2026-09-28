@@ -7,10 +7,6 @@ load_file('averaged_traces.json').then(
     }
 );
 
-
-
-
-
 function setup() {
 
     let container = document.getElementById('p5-canvas-container');
@@ -18,6 +14,7 @@ function setup() {
     let canvas = createCanvas(squareSize, squareSize);
     canvas.parent('p5-canvas-container');
     frameRate(20);
+    
 }
 
 traceIndex = 0;
@@ -30,21 +27,21 @@ function draw(){
     stroke(0);
     strokeWeight(3);
     for(let index = 0;index < averages.fghz.length;index++){
-        point(map(index,0,averages.fghz.length,0,width),map(averages.traces[traceIndex][index],0,1000,height/2,0));
+        point(map(index,0,averages.fghz.length,0,width),map(averages.traces[traceIndex][index],0,100000,height/2,0));
     }
 
-    strokeWeight(3);
+    strokeWeight(5);
     stroke(0);
     noFill();
     beginShape();
     for(let index = 0;index < averages.fghz.length;index++){
-        vertex(map(index,0,averages.fghz.length,0,width),map(averages.fit_function[index],0,1000,height/2,0));
+        vertex(map(index,0,averages.fghz.length,0,width),map(averages.fit_function[index],0,100000,height/2,0));
     }
     endShape();
     
     stroke(0);
     for(let index = 0;index < averages.fghz.length;index++){
-        point(map(index,0,averages.fghz.length,0,width), map(averages.traces[traceIndex][index] - averages.fit_function[index],-1000,1000,height,height/2) );
+        point(map(index,0,averages.fghz.length,0,width), map(Math.sqrt(averages.n[traceIndex])*(averages.traces[traceIndex][index] - averages.fit_function[index]),-100000,100000,height,height/2) );
     }    
     traceIndex += delta;
     if(traceIndex == 100){
