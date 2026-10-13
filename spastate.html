@@ -1,0 +1,191 @@
+ <!doctype html>
+<html>
+<head>
+<!--Stop Google:-->
+<META NAME="robots" CONTENT="noindex,nofollow">
+    
+<link href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/9wAA7usAAFVRAAC7uwAA//cAANrfAAD62wAA+t8AANjfAAD7jQAA+98AAPvfAAB7VwAA++8AAK/9AAD/fwAA" rel="icon" type="image/x-icon">
+
+
+    <script src ="spore.js"></script>
+    <title>spastate</title>
+</head>
+<body>
+<h1>Spectrum Analyzer Settings</h1>
+<table>
+    <tr>
+        <td>Start Frequency [GHz]:</td>
+        <td>
+            <input id ="f_start">
+        </td>
+        <td>Stop Frequency [GHz]:</td>
+        <td>
+            <input id ="f_stop">
+        </td>
+        <td>Number of Points:</td>
+        <td>
+            <input id ="number_of_points">
+        </td>
+    </tr>
+</table>
+    <form id="measurement-form">
+        <label for="vbw">Video Bandwidth [Hz]:</label>
+        <select id="vbw" name="vbw"></select>
+
+        <label for="rbw">Resolution Bandwidth [Hz]:</label>
+        <select id="rbw" name="rbw"></select>
+
+        <label for="ref_level">Reference Level [W]:</label>
+        <select id="ref_level" name="ref_level"></select>
+    </form>
+    
+<script>
+
+//const selectMenu = document.createElement('select');
+spastate = {};
+
+load_file("spastate.json").then(
+    spastatejson => {
+        spastate = JSON.parse(spastatejson);
+        loadValues();
+    }
+);
+
+
+function loadValues(){
+    document.getElementById("f_start").value = (spastate.f_start/1e9).toPrecision(3);
+    document.getElementById("f_stop").value = (spastate.f_stop/1e9).toPrecision(3);
+    document.getElementById("number_of_points").value = spastate.number_of_points;
+    
+    for(let index = 0;index < spastate.rbw_values.length;index++){
+        let option = document.createElement('option');
+        option.value = index;
+        option.textContent = (1e-6*spastate.rbw_values[index]).toPrecision(2) + " MHz";
+        document.getElementById("rbw").appendChild(option);
+    }
+    
+    for(let index = 0;index < spastate.vbw_values.length;index++){
+        let option = document.createElement('option');
+        option.value = index;
+        option.textContent = spastate.vbw_values[index] + " Hz";
+        document.getElementById("vbw").appendChild(option);
+    }
+
+    for(let index = 0;index < spastate.ref_level_values.length;index++){
+        let option = document.createElement('option');
+        option.value = index;
+        option.textContent = spastate.ref_level_values[index] + " W";
+        document.getElementById("ref_level").appendChild(option);
+    }
+    
+//    console.log(spastate.rbw_index);
+    document.getElementById('rbw').selectedIndex = spastate.rbw_index;
+    document.getElementById('vbw').selectedIndex = spastate.vbw_index;
+    document.getElementById('ref_level').selectedIndex = spastate.ref_level_index;
+    
+}
+
+document.getElementById('rbw').onchange = function(event) {
+    spastate.rbw_index = event.target.selectedIndex; 
+    data = encodeURIComponent(JSON.stringify(spastate,null,"    "));
+    save_file("spastate.json",data);
+    console.log(event.target.value);
+};
+
+document.getElementById('vbw').onchange = function(event) {
+    spastate.vbw_index = event.target.selectedIndex; 
+    data = encodeURIComponent(JSON.stringify(spastate,null,"    "));
+    save_file("spastate.json",data);
+    console.log(event.target.value);
+    
+};
+
+document.getElementById('ref_level').onchange = function(event) {
+    spastate.ref_level_index = event.target.selectedIndex; 
+    data = encodeURIComponent(JSON.stringify(spastate,null,"    "));
+    save_file("spastate.json",data);
+    console.log(event.target.value);
+
+};
+
+
+document.getElementById("f_start").onchange = function(){
+    value = 1e9*parseFloat(this.value);
+    
+    if(value > spastate.f_start_min && value < spastate.f_start_max && value < spastate.f_stop){
+        value = Math.round(value / 1e6) * 1e6;
+        spastate.f_start = value;
+        data = encodeURIComponent(JSON.stringify(spastate,null,"    "));
+        save_file("spastate.json",data);
+    }
+}
+
+
+document.getElementById("f_stop").onchange = function(){
+    value = 1e9*parseFloat(this.value);
+    if(value > spastate.f_stop_min && value < spastate.f_stop_max && value > spastate.f_start){
+        value = Math.round(value / 1e6) * 1e6;
+        spastate.f_stop = value;
+        data = encodeURIComponent(JSON.stringify(spastate,null,"    "));
+        save_file("spastate.json",data);
+    }
+}
+
+
+document.getElementById("number_of_points").onchange = function(){
+    value = parseInt(this.value);
+    if(value > spastate.number_of_points_min && value < spastate.number_of_points_max){
+        spastate.number_of_points = value;
+        data = encodeURIComponent(JSON.stringify(spastate,null,"    "));
+        save_file("spastate.json",data);
+    }
+}
+</script>
+<style>
+body {
+    font-family: sans-serif;
+    padding: 15px;
+}
+
+table {
+    border-collapse: collapse;
+    margin-bottom: 15px;
+}
+
+td {
+    padding: 6px 8px 6px 0;
+    font-size: 14px;
+}
+
+form {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    gap: 12px 10px;
+    align-items: center;
+}
+
+label {
+    font-size: 14px;
+}
+
+input {
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    width: 55px;
+    box-sizing: border-box;
+}
+
+select {
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    width: 90px;
+    box-sizing: border-box;
+}
+
+</style>
+</body>
+</html>

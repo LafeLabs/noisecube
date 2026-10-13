@@ -1,0 +1,40 @@
+{
+    "rbw_values": [
+        1000000,
+        300000,
+        100000
+    ],
+    "rbw_index": 1,
+    "vbw_values": [
+        10000,
+        1000,
+        300,
+        100
+    ],
+    "vbw_index": 1,
+    "ref_level_values": [
+        1e-12,
+        3e-12,
+        1e-11,
+        3e-11,
+        1e-10,
+        3e-10,
+        1e-9,
+        3e-9,
+        1e-8
+    ],
+    "ref_level_index": 6,
+    "f_start": 4000000000,
+    "f_start_min": 3000000000,
+    "f_start_max": 12000000000,
+    "f_stop": 8000000000,
+    "f_stop_min": 3000000000,
+    "f_stop_max": 12000000000,
+    "number_of_points": 401,
+    "number_of_points_min": 10,
+    "number_of_points_max": 4001,
+    "units":"W",
+    "func":"sample",
+    "idn":"Hewlett-Packard, E7405A, SG45102671, A.14.04",
+    "linear":true
+}

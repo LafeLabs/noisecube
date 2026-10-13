@@ -1,0 +1,30 @@
+{
+    "rbw_values":[
+        1e6,
+        3e5,
+        1e5
+    ],
+    "rbw_index":0,
+    "vbw_values":[
+        10000,
+        1000,
+        300,
+        100
+    ],
+    "ref_level":1e-9,
+    "ref_level_0":1e-9,
+    "ref_level_min":1e-12,
+    "ref_level_max":1e-8,
+    "f_start":4e9,
+    "f_start_0":4e9,
+    "f_start_min":3e9,
+    "f_start_max":12e9,
+    "f_stop":8e9,
+    "f_stop_0":8e9,
+    "f_stop_min":3e9,
+    "f_stop_max":12e9,
+    "number_of_points":401,
+    "number_of_points_0":401,
+    "number_of_points_min":10,
+    "number_of_points_max":4001
+}
